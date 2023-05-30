@@ -6,23 +6,23 @@ ini_set("display_startup_errors", 1);
 
 error_reporting(E_ALL);
 
-require_once("db.php");
+require_once("../db.php");
+require_once("../PDO.php");
 
-class Config {
+class Config extends AbstractPdo{
     private $id;
     private $nombreFactura;
     private $id_empleado;
     private $id_cliente;
     private $fecha;
-    protected $dbPDO;
 
-    public function __construct($id = 0, $nombreFactura = "", $id_empleado = "", $id_cliente = "", $fecha = ""){
+    public function __construct($id = 0, $nombreFactura = "", $id_empleado = "", $id_cliente = "", $fecha = "", $dbPDO = ""){
         $this->id = $id;
         $this->nombreFactura = $nombreFactura;
         $this->id_empleado = $id_empleado;
         $this->id_cliente = $id_cliente;
         $this->fecha = $fecha;
-        $this->dbPDO = new PDO(DB_TYPE.":host=".DB_HOST.";dbname=".DB_NAME, DB_USER, DB_PWD, [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC]);
+        parent::__construct($dbPDO);
     }
 
     public function setId($id){
